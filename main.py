@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, Request
 from fastapi.responses import PlainTextResponse
 from twilio.rest import Client
 import os
@@ -12,14 +12,19 @@ client= Client(account_sid,auth_token)
 app = FastAPI()
 
 @app.post("/whatsapp")
-async def whatsapp_webhook(Body: str = Form(...), From: str = Form(...)):
+# async def whatsapp_webhook(Body: str = Form(...), From: str = Form(...)):
+async def whatsapp_webhook(request:Request):
+
+    From= request.get("From")
+    Body= request.get("Body")
+    To= request.get("To")
     print(f"Message from {From}: {Body}")
 
     #reply to user
     client.messages.create(
-        from_="whatsapp:+14155238886",
+        from_=To,
         to=From,
-        body=f"Received the message: {Body}"
+        body=f"Received your message: {Body}"
     )
 
     # return PlainTextResponse("OK")
