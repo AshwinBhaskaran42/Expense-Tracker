@@ -18,8 +18,8 @@ async def whatsapp_webhook(Body: str = Form(...), From: str = Form(...)):
     #reply to user
     client.messages.create(
         from_="whatsapp:+14155238886",
-        to="whatsapp:+918125056526",
-        body=f"Got the message: {Body}"
+        to=From,
+        body=f"Received the message: {Body}"
     )
 
     # return PlainTextResponse("OK")
