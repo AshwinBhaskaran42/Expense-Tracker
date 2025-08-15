@@ -15,9 +15,11 @@ app = FastAPI()
 # async def whatsapp_webhook(Body: str = Form(...), From: str = Form(...)):
 async def whatsapp_webhook(request:Request):
 
-    From= request.get("From")
-    Body= request.get("Body")
-    To= request.get("To")
+    fdata= await request.form()
+
+    From= fdata.get("From")
+    Body= fdata.get("Body")
+    To= fdata.get("To")
     print(f"Message from {From}: {Body}")
 
     #reply to user
