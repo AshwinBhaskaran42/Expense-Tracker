@@ -15,7 +15,8 @@ app = FastAPI()
 # async def whatsapp_webhook(Body: str = Form(...), From: str = Form(...)):
 async def whatsapp_webhook(request:Request):
 
-    fdata= await request.form()
+    form_data= await request.form()
+    fdata=dict(form_data)
 
     From= fdata.get("From")
     Body= fdata.get("Body")
