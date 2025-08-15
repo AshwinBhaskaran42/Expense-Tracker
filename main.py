@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import PlainTextResponse
 from twilio.rest import Client
+from twilio.base.exceptions import TwilioRestException
 import os
 # from dotenv import load_dotenv
 
@@ -24,10 +25,13 @@ async def whatsapp_webhook(request:Request):
     print(f"Message from {From}: {Body}")
 
     #reply to user
-    client.messages.create(
-        from_=To,
-        to=From,
-        body=f"Got your msg: {Body}"
-    )
+    try:
+        client.messages.create(
+            from_=To,
+            to=From,
+            body=f"Got your msg: {Body}"
+        )
+    except TwilioRestException as e:
+        print("Twilio error: ",e)
 
     # return PlainTextResponse("OK")
