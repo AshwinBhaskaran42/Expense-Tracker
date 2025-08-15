@@ -27,7 +27,7 @@ async def whatsapp_webhook(request:Request):
     client.messages.create(
         from_=To,
         to=From,
-        body=f"Got your message: {Body}"
+        body=f"Got your msg: {Body}"
     )
 
     # return PlainTextResponse("OK")
