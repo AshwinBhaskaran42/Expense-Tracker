@@ -33,7 +33,7 @@ def parse_expense_message_by_line(body):
     return result
 
 def format_expense_message(expense_list):
-    col_width = 20  # width of the item-name column
+    col_width = 19  # width of the item-name column
     lines = []
 
     # Header
