@@ -3,12 +3,25 @@ from fastapi.responses import PlainTextResponse, HTMLResponse
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
 import os
-# from dotenv import load_dotenv
+import time
+from supabase import create_async_client, Client as SupabaseClient
+from dotenv import load_dotenv
 
-# load_dotenv("keys.env")
+load_dotenv("keys.env")
 account_sid=os.getenv("account_sid")
 auth_token=os.getenv("auth_token")
 client= Client(account_sid,auth_token)
+
+supabase_url=os.getenv("supabase_url")
+supabase_key=os.getenv("supabase_key")
+
+async def init_supabase():
+    return await create_async_client(supabase_url, supabase_key)
+
+def clean_number(raw_number):
+    if raw_number.startswith("whatsapp:"):
+        return raw_number.replace("whatsapp:","")
+    return raw_number
 
 def parse_expense_message_by_line(body):
     # Split the message into lines and strip extra spaces
@@ -31,6 +44,7 @@ def parse_expense_message_by_line(body):
         if item and amount is not None:
             result.append((item, amount))
     return result
+    # sample result: [('apple', 50), ('led bulb', 60), ('kiwi', 70)]
 
 def format_expense_message(expense_list):
     col_width = 19  # width of the item-name column
@@ -66,6 +80,13 @@ def format_expense_message(expense_list):
 
     # Join all lines and wrap in triple backticks for WhatsApp monospace
     return "```\n" + "\n".join(lines) + "\n```"
+#Sample return value:
+# Item-name         Amount
+# ------------------------
+# apple             50
+# led bulb factory  60
+# unit              
+# kiwi              70
 
 
 app = FastAPI()
@@ -89,26 +110,39 @@ async def whatsapp_webhook(request:Request):
     form_data= await request.form()
     fdata=dict(form_data)
 
-    From= fdata.get("From")
+    From= fdata.get("From") # gives: "whatsapp:+91xxxxxxxxxx"
     Body= fdata.get("Body")
     To= fdata.get("To")
     print(f"Message from {From}: {Body}")
 
     resp1= parse_expense_message_by_line(Body)
     reply1=format_expense_message(resp1)
+    cln_number= clean_number(From)
 
     try:
-        client.messages.create(
-            from_=To,
-            to=From,
-            body=reply1
+        supabase = await init_supabase()
+        for item,amt in resp1:
+            await supabase.table("expenses_record").insert({
+                "mobile_number":cln_number,
+                "item_name":item,
+                "amount":amt,
+                "timestamp":int(time.time())
+            }).execute()
+    except Exception as e:
+        print("Supabase error: ",e)
+    print("HelloTest")
+    # #replying with a formatted response
+    # try:
+    #     client.messages.create(
+    #         from_=To,
+    #         to=From,
+    #         body=reply1
+    #     )
 
-        )
+    # except TwilioRestException as e:
+    #     print("Twilio error: ",e)
 
-    except TwilioRestException as e:
-        print("Twilio error: ",e)
-
-    # #reply to user
+    # #simple reply to user
     # try:
     #     client.messages.create(
     #         from_=To,
