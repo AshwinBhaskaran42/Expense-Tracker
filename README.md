@@ -13,3 +13,11 @@ Individuals who want a quick and hassle-free way to track personal expenses.
 Students and professionals who prefer expense tracking without installing extra apps.
 
 Small groups or families needing a lightweight expense management solution.
+
+## Tech Stack
+
+Backend: Python, FastAPI, APScheduler
+Database: Supabase (PostgreSQL)
+Messaging: Twilio WhatsApp API
+Frontend: HTML, CSS, JavaScript
+Hosting/Deployment: Render
