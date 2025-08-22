@@ -1,12 +1,12 @@
-#WhatsApp-based Expense Tracker
+# WhatsApp-based Expense Tracker
 
-##Problem Statement:
+## Problem Statement:
 Managing daily expenses can be tedious and often requires users to manually note down transactions in spreadsheets or apps, which disrupts their natural workflow.
 
-##Objective:
+## Objective:
 Build a WhatsApp-integrated chatbot that allows users to record, manage, and summarize expenses directly through WhatsApp with real-time confirmations, automated daily summaries, and secure storage using Supabase.
 
-##Target Audience:
+## Target Audience:
 
 Individuals who want a quick and hassle-free way to track personal expenses.
 
