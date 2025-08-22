@@ -22,6 +22,4 @@ Database: Supabase (PostgreSQL)
 
 Messaging: Twilio WhatsApp API
 
-Frontend: HTML, CSS, JavaScript
-
 Hosting/Deployment: Render
