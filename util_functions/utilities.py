@@ -1,5 +1,6 @@
 import datetime
 import textwrap
+import pyotp
 
 # to parse the user's expenses into a List-of-tuples like [('Apple 5 kg', 50), ('chicken 65', 65)].
 def parse_expense_message_by_line(body):
@@ -92,10 +93,18 @@ def handle_help():
         # "100 Wheat 5 kg ❌"
     )
 
-# Used to fetch the entire day's (12-hours) epoch-time range
+# Used to fetch the entire day's (12-hours) epoch-time range.
 def get_today_epoch_range():
     """Return start and end epoch timestamps for today"""
     now = datetime.datetime.now()
     start_of_day = datetime.datetime(now.year, now.month, now.day, 0, 0, 0)
     end_of_day = datetime.datetime(now.year, now.month, now.day, 23, 59, 59)
     return int(start_of_day.timestamp()), int(end_of_day.timestamp())
+
+# To fetch current current epoch time
+def current_epoch_time():
+    return int(datetime.datetime.now().timestamp())
+
+# To generate a base32 string, to be assigned(only once) to a new user in supabase.
+def generate_TOTP_secret():
+    return pyotp.random_base32()

@@ -1,16 +1,24 @@
 # importing supabase and twilio functionalities
-from src.config.db import *
-from src.integrations.twilio_works import *
 
+from src.integrations.twilio_works import * # includes: from src.config.db import * && from import_env import *
+from util_functions.utilities import generate_TOTP_secret, get_today_epoch_range
+
+twil_number = os.getenv("twilio_number")
 
 # To register new user into the "users" table in supabase
 async def register_user(supclient, mobile):
-    data = {"mobile_number": mobile}
+    TOTP_secret = generate_TOTP_secret()
+    current_epoch = get_today_epoch_range()
+    data = {
+        "mobile_number": mobile,
+        "registered_at":current_epoch,
+        "totp_secret":TOTP_secret
+    }
     await supclient.table("users").insert(data).execute()
 
     # Send welcome message using Twilio
     await send_whatsapp_message(
-        from_="whatsapp:+14155238886",   # Twilio sandbox / business number
+        from_=f"whatsapp:{twil_number}",   # Twilio sandbox / business number
         to=f"whatsapp:{mobile}",
         # body=(
         #     "🎉 Welcome to the WhatsApp Expense Tracker!\n\n"
