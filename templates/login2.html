@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TraWell</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: linear-gradient(151.79deg, #f2ebe0 50%, #d2bb96 0%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .signup-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .signup-header {
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: #513d1b;
+            color: white;
+            padding: 40px 30px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 2.5rem;
+            /* font-weight: 700; */
+            font-weight: 800;
+            margin-bottom: 10px;
+            /* letter-spacing: -1px; */
+            letter-spacing: -0.02em;
+            /* text-shadow: 0 2px 4px rgba(252, 252, 252, 0.432); */
+        }
+
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .signup-form {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 15px;
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: #513d1b;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: system-ui;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .signup-btn:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+            color: #9ca3af;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e8ed;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 20px;
+            font-size: 14px;
+        }
+
+        .social-btn {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            background: white;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-btn:hover {
+            border-color: #9ca3af;
+            background: #f8f9fa;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 30px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            /* color: #667eea; */
+            color: #513d1b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .terms {
+            font-size: 12px;
+            color: #9ca3af;
+            text-align: center;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        .terms a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .signup-container {
+                border-radius: 0;
+                height: 100vh;
+            }
+            
+            .signup-header {
+                padding: 60px 30px 30px;
+            }
+        }
+
+        /* Subtle animations */
+        .signup-container {
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            <div class="logo">MyHisab</div>
+            <!-- <div class="tagline">Your travel companion awaits</div> -->
+            <div class="tagline">Login To Your Account</div>
+        </div>
+        
+        <form class="signup-form" action="/api/otp-login" method="POST">
+            <div class="form-group">
+                <input name='mobile' type="tel" class="form-input" value="{{ mobile }}" readonly>
+            </div>
+            <div class="form-group">
+                <input name='otp' type="password" class="form-input" placeholder="OTP" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
+            </div>
+            <button type="submit" class="signup-btn">Login</button>
+        </form>
+        
+        <div class="login-link" style="padding-bottom: 30px;">
+            Don't have an account? <a href="/signup">Signup</a>
+        </div>
+        
+    </div>
+</body>
+</html>

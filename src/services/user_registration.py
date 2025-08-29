@@ -1,14 +1,14 @@
 # importing supabase and twilio functionalities
 
 from src.integrations.twilio_works import * # includes: from src.config.db import * && from import_env import *
-from util_functions.utilities import generate_TOTP_secret, get_today_epoch_range
+from util_functions.utilities import generate_TOTP_secret, current_epoch_time
 
 twil_number = os.getenv("twilio_number")
 
 # To register new user into the "users" table in supabase
 async def register_user(supclient, mobile):
     TOTP_secret = generate_TOTP_secret()
-    current_epoch = get_today_epoch_range()
+    current_epoch = current_epoch_time()
     data = {
         "mobile_number": mobile,
         "registered_at":current_epoch,
