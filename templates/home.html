@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsappKhata - Expense Tracker</title>
+    <title>MyHisab</title>
     <style>
         * {
             margin: 0;
@@ -327,7 +327,7 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="/home" class="logo">WhatsappKhata</a>
+                <a href="/home" class="logo">MyHisab</a>
                 <nav class="nav">
                     <a href="/home">Home</a>
                     <a href="/about">About</a>
@@ -345,40 +345,30 @@
                 <div class="hero-text">
                     <h1>Track Your WhatsApp Expenses Effortlessly</h1>
                     <p>Manage your group expenses, split bills, and keep track of payments directly through WhatsApp. Simple, secure, and hassle-free expense management for everyone.</p>
-                    
-                    <div class="signup-form">
-                        <h3 style="color: #333; margin-bottom: 1rem;">Get Started with Your Number</h3>
-                        <div class="phone-input">
-                            <input type="text" class="country-code" value="+91" readonly>
-                            <input type="tel" class="phone-number" placeholder="Enter your phone number" id="phoneNumber">
+                    <form action="/home" method="post">
+                        <div class="signup-form">
+                            <h3 style="color: #333; margin-bottom: 1rem;">Get Started with Your Number</h3>
+                            <div class="phone-input">
+                                <input type="text" class="country-code" value="+91" readonly>
+                                <input type="tel" class="phone-number" placeholder="Enter your phone number" id="phoneNumber" name="mobile">
+                            </div>
+                            <button type="submit" class="signup-btn" onclick="redirectToLogin()">Sign Up with WhatsApp</button>
+                            <a href="/about"><button class="secondary-btn" type="button">Learn More</button></a>
                         </div>
-                        <button class="signup-btn" href ="/signup"><a style="text-decoration: none; color: white;" href="/signup">Sign Up with WhatsApp</a></button>
-                        <button class="secondary-btn" href = "/about"><a style="text-decoration: none; color:black;" href="/about">Learn More</a></button>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="qr-section">
                     <div class="qr-container">
-                        <div class="qr-placeholder">
-                            <svg class="qr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="3" width="7" height="7"/>
-                                <rect x="14" y="3" width="7" height="7"/>
-                                <rect x="3" y="14" width="7" height="7"/>
-                                <path d="M16 16h1v1h-1z"/>
-                                <path d="M18 16h1v1h-1z"/>
-                                <path d="M16 18h1v1h-1z"/>
-                                <path d="M18 18h1v1h-1z"/>
-                                <path d="M20 16h1v1h-1z"/>
-                                <path d="M20 18h1v1h-1z"/>
-                                <path d="M16 20h1v1h-1z"/>
-                                <path d="M18 20h1v1h-1z"/>
-                                <path d="M20 20h1v1h-1z"/>
-                            </svg>
+                    
+                            <!-- Replace placeholder with Twilio QR -->
+                            <img src="/static/twilio_QR.svg" alt="Twilio WhatsApp QR Code" 
+                                style="width:200px; height:200px; border-radius:8px; margin-bottom:1rem;">
+                            <div class="qr-text">Scan QR Code</div>
+                            <div class="qr-subtext">Open WhatsApp and scan to connect instantly</div>
                         </div>
-                        <div class="qr-text">Scan QR Code</div>
-                        <div class="qr-subtext">Open WhatsApp and scan to connect instantly</div>
-                    </div>
-                    <p style="color: #666; font-size: 0.9rem;">or use the signup form on the left</p>
+                        <p style="color: #666; font-size: 0.9rem;">or use the signup form on the left</p>
+
                 </div>
             </div>
         </div>
@@ -404,5 +394,16 @@
             </div>
         </div>
     </footer> -->
+
+    <script>
+        function redirectToLogin() {
+            const phone = document.getElementById("phoneNumber").value.trim();
+            if (phone) {
+                window.location.href = `/login`;
+            } else {
+                alert("Please enter your phone number");
+            }
+        }
+    </script>
 </body>
 </html>

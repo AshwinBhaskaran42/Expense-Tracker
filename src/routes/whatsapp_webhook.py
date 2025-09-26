@@ -31,8 +31,10 @@ async def whatsapp_webhook(request:Request):
             cmd = Body.split()[0].lower()
             if cmd == "/help":
                 reply1 = handle_help()
-            elif cmd == "/totalexpenseoftoday":
+            elif cmd == "/totalexpenseuntilnow":
                 reply1 = await handle_total_today(supclient, cln_number)
+            elif cmd == "/categorize_items":
+                reply1 = await catorgize_items(supclient,cln_number)
             elif cmd == "/delete_account":
                 reply1 = await handle_delete_account(supclient, cln_number, Body)
             else:

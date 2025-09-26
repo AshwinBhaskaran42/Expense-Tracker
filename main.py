@@ -1,20 +1,21 @@
 from fastapi import FastAPI
 from src.routes.whatsapp_webhook import router as whatsapp_router
-from src.services.cronjob import *
-#################
 from src.routes.auth import router as auth_router
-from src.routes.about import router as about_router
-from src.routes.guidelines import router as guidelines_router
 from src.routes.dashboard import router as dashboard_router
+from src.routes.settings import router as settings_router
+from src.routes.cron_routes import router as cron_router
+from src.routes.join_code_register import router as joining_router
+from static_mount import add_static
+
 
 app = FastAPI()
-
+add_static(app)
 app.include_router(whatsapp_router)
 app.include_router(auth_router)
-app.include_router(about_router)
-app.include_router(guidelines_router)
 app.include_router(dashboard_router)
-############
+app.include_router(settings_router)
+app.include_router(cron_router)
+# app.include_router(joining_router)
 # @app.get('/', response_class=HTMLResponse)
 # async def home():
 #     with open("home.html", "r") as f:
@@ -26,6 +27,3 @@ app.include_router(dashboard_router)
 #     with open("about.html", "r") as f1:
 #         about_content= f1.read()
 #     return HTMLResponse(content=about_content)
-
-################################################################################
-

@@ -1,6 +1,8 @@
 import concurrent.futures
 from twilio.rest import Client as TwilioClient
 import asyncio
+from src.integrations.openai import *
+from src.integrations.resend import *
 from src.config.db import * # includes: import_env import *
 from util_functions.utilities import *
 
@@ -13,8 +15,8 @@ executor = concurrent.futures.ThreadPoolExecutor()
 async def get_twilio_client():
     global twilio_client
     if twilio_client is None:
-        twilio_account_sid=os.getenv("twilio_account_sid")
-        twilio_auth_token=os.getenv("twilio_auth_token")
+        twilio_account_sid=os.getenv("account_sid")
+        twilio_auth_token=os.getenv("auth_token")
         twilio_client= TwilioClient(twilio_account_sid,twilio_auth_token)
         return twilio_client
     return twilio_client
@@ -122,6 +124,60 @@ async def send_daily_summary():
             )
             print(f"✅ Daily summary sent to {mobile}")
 
+            # Send via Email
+            res = await supclient.table("users").select("email").eq("mobile_number", mobile).single().execute()
+            if res.data and res.data.get("email"):
+                email_body = f"""
+                <h2>📊 Daily Expense Summary</h2>
+                <p>Here’s your summary for today:</p>
+                <pre>{lines}</pre>
+                <p><b>Total: ₹{total}</b></p>
+                """
+                await send_email(res.data["email"], "Your Daily Expense Summary", email_body)
+
     except Exception as e:
         print("Error in daily summary:", e)
 
+
+# twilio_works.py
+
+async def catorgize_items(supclient, cln_number):
+    """
+    Fetch today's expenses for a given user, categorize them using GPT,
+    and return a formatted category-wise breakdown message.
+    """
+
+    try:
+        supclient = await get_supabase()
+        start_epoch, end_epoch = get_today_epoch_range()
+
+        # Fetch today's expenses for the given user
+        res = await supclient.table("expenses_record") \
+            .select("*") \
+            .eq("mobile_number", cln_number) \
+            .gte("timestamp", start_epoch) \
+            .lt("timestamp", end_epoch) \
+            .execute()
+
+        rows = res.data or []
+        if not rows:
+            return "No expenses recorded today to categorize."
+
+        # Get category totals from GPT
+        cat_list = await gpt_category_totals(rows)   # List[(category, amount)]
+
+        # Format into a readable message
+        message_lines = ["📊 Today's Category Breakdown:"]
+        total = 0
+        for cat, amt in cat_list:   # <- for-loop
+            message_lines.append(f"{cat}: ₹{amt}")
+            total += amt
+
+        message_lines.append("-" * 25)
+        message_lines.append(f"Total = ₹{total}")
+
+        return "\n".join(message_lines)
+
+    except Exception as e:
+        print("Error in catorgize_items:", e)
+        return "❌ Error while categorizing today's expenses."
