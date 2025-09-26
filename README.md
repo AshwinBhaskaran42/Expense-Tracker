@@ -16,25 +16,25 @@ Small groups or families needing a lightweight expense management solution.
 ##  Features
 
 * **WhatsApp Integration (Twilio API)**
-  Add expenses directly through WhatsApp messages.
+  - Add expenses directly through WhatsApp messages.
 
 * **Smart AI Categorization (OpenAI API)**
-  Automatically groups expenses into categories like *Groceries, Electronics, Food, Transport,* etc.
+  - Automatically groups expenses into categories like *Groceries, Electronics, Food, Transport,* etc.
 
 * **Secure Cloud Storage (Supabase)**
-  All expenses linked to your WhatsApp number and stored securely.
+  - All expenses linked to your WhatsApp number and stored securely.
 
 * **Daily & Weekly Reports**
-  Automated **cron jobs** deliver expense summaries with total + category breakdown.
+  - Automated **cron jobs** deliver expense summaries with total + category breakdown.
 
 * **Web Dashboard (FastAPI + Jinja2)**
-  View insights for today, last 7 days, and last 30 days.
+  - View insights for today, last 7 days, and last 30 days.
 
 * **Authentication with OTP (TOTP + JWT)**
-  Login using WhatsApp-based OTP for secure access.
+  - Login using WhatsApp-based OTP for secure access.
 
 * **Account Controls**
-  Update name/email, delete account, or export data anytime.
+  - Update name/email, delete account, or export data anytime.
 
 ---
 
