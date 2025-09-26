@@ -1,4 +1,4 @@
-# WhatsApp-based Expense Tracker
+# MyHisab (WhatsApp-based Expense Tracker)
 
 ## Problem Statement:
 Managing daily expenses can be tedious and often requires users to manually note down transactions in spreadsheets or apps, which disrupts their natural workflow.
